@@ -1,0 +1,7 @@
+﻿{
+  "categories": [
+    { "name": "Languages", "items": ["C#","C++", "Blueprints", "Lua", "JavaScript","Python","MySQL"] },
+    { "name": "Engines", "items": ["Unreal Engine 5", "Unity"] },
+    { "name": "Tools", "items": ["Perforce", "Git", "Rider", "Visual Studio"] }
+  ]
+}

@@ -1,0 +1,14 @@
+﻿{
+  "name": "Ada Jiang",
+  "headline": "Game Developer/Designer",
+  "location": "Corvallis, OR",
+  "intro": "With a solid computer science foundation, I work primarily in Unreal Engine, with experience in Unity and Blender.\nMy work spans gameplay systems, engine-level programming, and real-time visuals — from system architecture and performance-oriented code to shaders, VFX, and tooling that make gameplay feel responsive and immersive.",
+  "socials": {
+    "github": "https://github.com/AdaHJ123",
+    "linkedin": "https://www.linkedin.com/in/ada-j-36bb33393/",
+    "instagram": "https://www.instagram.com/gnaij.ada/"
+  },
+  "resumeUrl": "/GameResume1.0.pdf",
+  "avatar": "/me.jpg"
+}
+

@@ -1,0 +1,18 @@
+﻿{
+    "slug":  "escave",
+    "title":  "Escave",
+    "year":  2023,
+    "role":  "Gameplay (Unity, C#)",
+    "duration":  "1 month",
+    "tags":  [
+                 "Unity",
+                 "C#"
+             ],
+    "videoSrc":  "/media/output_escave.mp4",
+    "poster":  "",
+    "summary":  "Recoil animation, decals, weapon switch, enemy AI tweaks.",
+    "links":  {
+                  "demo":  "",
+                  "github":  ""
+              }
+}

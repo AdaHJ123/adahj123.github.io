@@ -1,0 +1,108 @@
+{
+  "slug": "dynamic-sky-system",
+  "title": "Dynamic Sky",
+  "year": 2024,
+  "role": "Technical Artist (UE5, Blueprint)",
+  "duration": "1 week",
+  "tags": [
+    "Unreal",
+    "Blueprint",
+    "Niagara"
+  ],
+  "youtubeId": "CU8WZYpBGns",
+  "videoSrc": "/media/10ssky.mp4",
+  "poster": "",
+  "summary": "A modular UE5 Dynamic Sky system featuring real-time day-night cycles with sun and moon control, built as a reusable Sky Blueprint with exposed parameters. The system includes star visibility control and both 2D and volumetric cloud setups.",
+  "descriptionLong": "The development goal is to design the Sky Blueprint to be modular and reusable, enabling seamless integration into any scene by simply dragging the actor into the level. I created a Sky Blueprint containing key components such as Directional Light, Sky Atmosphere, Skylight (enabled real time capture), Exponential Height Fog, and Post-Process Volume to establish foundational lighting. I also configured a global Post-Process Volume to disable auto exposure, ensuring consistent lighting for both day and night scenes.",
+  "sections": [
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "text": "The development goal is to design the Sky Blueprint to be modular and reusable, enabling seamless integration into any scene by simply dragging the actor into the level. I created a Sky Blueprint containing key components such as Directional Light, Sky Atmosphere, Skylight (enabled real time capture), Exponential Height Fog, and Post-Process Volume to establish foundational lighting. I also configured a global Post-Process Volume to disable auto exposure, ensuring consistent lighting for both day and night scenes.",
+      "layout": "grid",
+      "dataSection": "project-detail-dynamic-sky-intro-gallery",
+      "images": [
+        {
+          "src": "/media/projects/dynamic-sky/bpfull.png",
+          "alt": "Sky blueprint full components"
+        },
+        {
+          "src": "/media/projects/dynamic-sky/overall event graph.png",
+          "alt": "Sky system overall event graph"
+        }
+      ]
+    },
+    {
+      "id": "day-night",
+      "title": "Day and night cycle",
+      "text": "Integrated both the Construction Script and Event Graph into the Sky Blueprint to enable dynamic updates and adjustable properties during pre-runtime and runtime. Imported building assets and built an environment map with UE built-in water custom body to evaluate the sky system components. Added variables like Time of Day, Dawn Time, and Dusk Time, all exposed to the details panel for further adjusting. Used a remapping function (Map Range Unclamped) to control sun rotation based on Time of Day, defining key positions for sunrise, noon, and sunset.",
+      "layout": "stack",
+      "dataSection": "project-detail-dynamic-sky-day-night-gallery",
+      "images": [
+        {
+          "src": "/media/projects/dynamic-sky/rotation-illustration.png",
+          "alt": "Diagram illustrating the changes in Moon and Sun rotation angles (from Udemy UE weather system course slides)",
+          "thumbFit": "contain",
+          "thumbSize": "narrow",
+          "thumbRatio": "auto"
+        }
+      ]
+    },
+    {
+      "id": "day-night-pair",
+      "layout": "grid",
+      "dataSection": "project-detail-dynamic-sky-day-night-pair",
+      "images": [
+        {
+          "src": "/media/projects/dynamic-sky/handle-visibility.png",
+          "alt": "Handle Visibility function"
+        },
+        {
+          "src": "/media/projects/dynamic-sky/moon-sun-bp-func.png",
+          "alt": "Moon and Sun rotation BP function"
+        }
+      ],
+      "afterText": "Integrated Blueprint Macros into the Handle Visibility function and designed a <a href=\"https://photos.app.goo.gl/mWAxUC3dzMdJ8VNj9\" target=\"_blank\" rel=\"noreferrer\">Handle Night Settings</a> function to control key properties such as <strong>directional light intensity, temperature, Rayleigh Scattering, Multi Scattering, and Ground Albedo</strong>. These adjustments ensured a balanced sky tint and brightness, creating a realistic nighttime atmosphere. These features all contributed to smooth and natural transitions between day and night cycles.",
+      "afterText2": "<p>My special modifications to make the day-night transition more realistic—for example, the moon becomes faintly visible at dusk, along with the setting sun:</p><p>For <a href=\"https://photos.app.goo.gl/mWAxUC3dzMdJ8VNj9\" target=\"_blank\" rel=\"noreferrer\">Handle Night Settings</a> function, I added a moon texture, controlled through dynamic material parameters for size, rotation, brightness, and tint. Integrated logic to toggle moon visibility based on day-night cycles, like the star system. Improved sun and moon positioning by introducing a yaw rotation variable, allowing flexible adjustment of their positions in the sky. All key parameters, including moon scale, brightness, and tint, were exposed in the blueprint for real-time customization, enabling diverse lighting scenarios and enhancing the overall day-night cycle with user-friendly controls. Repeated this process to set up a sun texture.</p><p>Enhanced the dynamic sky system by integrating star visibility control tied to the time of day. Introduced a scalar parameter, \"Is Star Visible,\" within the material graph using an if node for toggling star visibility. Developed a Dynamic Material Instance (DMI) in the blueprint to communicate with the material, enabling real-time adjustments. Key steps included:</p><div class=\"detail-list\"><span class=\"detail-list-line\"><span class=\"detail-list-num\">1.</span>Material Enhancements: Added the star texture and included parameters for tiling, panning speed, and brightness. Designed a noise-based mask to break up tiling patterns and achieve a more natural appearance.</span><span class=\"detail-list-line\"><span class=\"detail-list-num\">2.</span>Blueprint Integration: Created a new function called InitSkyShpereMaterial to initialize the material instance and link it to the sky sphere. Added logic in the Handle Night Settings function to toggle the stars based on a boolean variable (\"Show Stars\") exposed in the details panel.</span><span class=\"detail-list-line\"><span class=\"detail-list-num\">3.</span>Time of Day Synchronization: Automatically hide stars during daytime and ensured seamless transitions between day and night by dynamically adjusting the scalar parameter.</span></div><p>The implementations allowed for intuitive toggling of stars and improved overall visual fidelity by addressing both the behavior of stars and their appearance on the horizon.</p>",
+      "youtubeId": "lHg5CfJwjBM",
+      "videoCaption": "Enhanced Day-Night Cycle Showcase"
+    },
+    {
+      "id": "cloud-systems",
+      "title": "Cloud Systems: 2D and Volumetric Clouds",
+      "text": "<p>Implemented a robust 2D cloud system within the dynamic sky setup, using a Blueprint enumeration (E_CloudMode) to seamlessly switch between cloud modes. Created the 2D cloud material with configurable parameters for tiling, panning speed, brightness, and tint, enabling real-time customization through the material instance. These following improvements were achieved with simple shader math, adding robustness and visual clarity to the cloud system:</p><div class=\"detail-list\"><span class=\"detail-list-line\"><span class=\"detail-list-num\">1.</span>Achieved dynamic cloud movement using a Panner node with subtle animations for a realistic effect. Organized all parameters into 2D Clouds category for improved clarity.</span><span class=\"detail-list-line\"><span class=\"detail-list-num\">2.</span>Solved horizon and seam issues through shader adjustments ( Reused the existing star mask as a global control to eliminate clouds above the horizon, providing customizable control via the material instance. Utilized the UV mapping of the sky sphere to create a precise mask that removes clouds at the top of the sphere, ensuring a seamless appearance. )</span><span class=\"detail-list-line\"><span class=\"detail-list-num\">3.</span>Implemented dynamic tinting for 2D clouds using Sky Atmosphere View Luminance, allowed them to blend naturally with the sky's color. Introduced a Tint Strength parameter for the Sky Atmosphere, enabling customizable blending that automatically adjusts for day and night.</span><span class=\"detail-list-line\"><span class=\"detail-list-num\">4.</span>Polished the 2D cloud system by adding Blueprint logic to control visibility, panning speed, brightness, and tint strength based on the selected mode. Also used macros to manage parameters more efficiently and exposed key settings for real-time adjustments.</span></div><p><a href=\"https://photos.app.goo.gl/Wa8Ff8yy6zWgzioj7\" target=\"_blank\" rel=\"noreferrer\">2D Cloud Material Graph</a></p>",
+      "images": [
+        {
+          "src": "/media/projects/dynamic-sky/2dclouds.gif",
+          "alt": "Cloud Mode Switch in Editor",
+          "thumbFit": "contain"
+        },
+        {
+          "src": "/media/projects/dynamic-sky/2dcloudsparams.gif",
+          "alt": "2D Cloud parameters adjustment preview",
+          "thumbFit": "contain"
+        }
+      ],
+      "afterImagesLayout": "stack",
+      "afterText": "<p></p>",
+      "afterText2": "<p>Created a foundational volumetric cloud system by incorporating a volumetric cloud component to the dynamic sky actor. Created a custom volumetric cloud material with parameters for albedo, pattern scale, radius, softness, and texture channel selection. Implemented world-space projection for precise cloud placement and used a flexible 2D texture mask to define cloud shapes.</p><p>To make the clouds look more realistic, integrated a detailed 3D noise system using a 3D Noise Texture Object Parameter, which allows for flexible texture swapping and world-space projection. Designed 3D Noise Settings with adjustable scale, influence radius, and strength, enabling precise control over cloud erosion and shape customization. The 3D noise output was combined with the existing 2D texture mask through an additive approach. And key parameters were exposed in the material instance for real-time adjustments, allowing the creation of diverse cloud patterns.</p><p>Refined the volumetric cloud material by integrating advanced features. The following are the steps for these features:</p><div class=\"detail-list\">  <span class=\"detail-list-line\"><span class=\"detail-list-num\">1.</span>Added a cloud sample attribute node to utilize altitude-based data, enabling precise control over cloud shapes and enhancing variation across cloud layers.</span>  <span class=\"detail-list-line\"><span class=\"detail-list-num\">2.</span>Created a dual 3D noise system by sampling noise textures twice—one for the upper cloud layer and one for the bottom, and they both have customizable scale, strength, and distortion parameters.</span>  <span class=\"detail-list-line\"><span class=\"detail-list-num\">3.</span>Used cached outputs from the upper noise to distort the bottom noise, creating more complex and realistic cloud patterns.</span>  <span class=\"detail-list-line\"><span class=\"detail-list-num\">4.</span>Implemented a macro variation material function, adding randomness and detail to cloud textures. Also added controls to toggle macro variation for performance optimization.</span>  <span class=\"detail-list-line\"><span class=\"detail-list-num\">5.</span>Optimized the material further by utilizing advanced output sockets, such as conservative density, for efficient ray marching, this can reduce computation in empty regions.</span>  <span class=\"detail-list-line\"><span class=\"detail-list-num\">6.</span>Exposed key settings like altitude mask, panning speed, and ambient occlusion in the material instance for real-time adjustments.</span>  <span class=\"detail-list-line\"><span class=\"detail-list-num\">7.</span>Introduced macro variation, implemented through a custom material function, which uses multi-sample texture tiling and blending to add additional randomness and complexity in the cloud shapes. This feature was also made toggleable with a switch parameter, allowing real-time adjustments for performance optimization.</span></div><p>Additionally, advanced scattering and occlusion settings were fine-tuned to achieve more customized cloud lighting. Optimization techniques such as ray marching were used to avoid rendering empty parts of the sky. Utilized the Conservative Density socket and an adjustable ambient occlusion parameter to refine self-shadowing effects and add depth to the clouds, making the cloud system adaptable to a wide range of environmental scenarios.</p><p><a href=\"https://photos.app.goo.gl/5qPzhtWvf29hWrdz8\" target=\"_blank\" rel=\"noreferrer\">3D Cloud Material Graph</a></p>",
+      "afterImages": [
+        {
+          "src": "/media/projects/dynamic-sky/3dclouds.gif",
+          "alt": "3D Cloud Params Adjustment Preview",
+          "thumbSize": "narrow",
+          "thumbFit": "contain"
+        }
+      ]
+    },
+    {
+      "id": "troubleshooting",
+      "textVariant": "comment",
+      "text": "<p>// Troubleshooting Reference – Auto Exposure in UE5<br>// Despite disabling auto exposure and changing exposure values manually, the scene would still gradually brighten over time. Here is the discussion I found helpful to fix this issue. <a href=\"https://www.reddit.com/r/unrealengine/comments/zwk286/is_there_a_way_to_avoid_auto_exposure_entirely/\" target=\"_blank\" rel=\"noreferrer\">link for the page</a></p>"
+    }
+  ],
+  "links": {
+    "demo": "",
+    "github": ""
+  }
+}

@@ -1,0 +1,465 @@
+﻿/* Project detail layout (aligned with reference) */
+.project-detail {
+  padding-top: 12px;
+}
+
+@media (min-width: 768px) {
+  .project-detail {
+    padding-top: 20px;
+  }
+}
+.portfolio-header {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.portfolio-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(138, 180, 255, 0.6);
+  background: linear-gradient(120deg, rgba(138, 180, 255, 0.18), rgba(226, 155, 167, 0.16));
+  color: #d7e6ff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 0 0 1px rgba(138, 180, 255, 0.15), 0 10px 22px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.portfolio-close:hover {
+  color: #ffffff;
+  border-color: rgba(138, 180, 255, 0.9);
+  background: linear-gradient(120deg, rgba(138, 180, 255, 0.28), rgba(226, 155, 167, 0.22));
+  transform: translateY(-1px);
+}
+
+.portfolio-close small {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+}
+
+.close-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(138, 180, 255, 0.7);
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.close-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.portfolio-top {
+  margin: 8px 0 16px;
+}
+
+.portfolio-top h2 {
+  position: relative;
+  top: -56px;
+  margin-bottom: -49px;
+  padding: 16px;
+  background-color: rgba(30, 30, 30, 0.8);
+  font-size: 1.125rem;
+  height: 53px;
+}
+
+@media (min-width: 768px) {
+  .portfolio-top h2 {
+    top: -72px;
+    margin-bottom: -74px;
+    font-size: 2rem;
+    height: 69px;
+  }
+}
+
+.content-placeholder {
+  position: relative;
+  width: 100%;
+  display: block;
+  line-height: 0;
+  background-color: #252525;
+  overflow: hidden;
+}
+
+.content-placeholder video {
+  width: 100%;
+  display: block;
+}
+
+.experience {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 0 32px;
+}
+
+.job-card {
+  background-color: #1e1e1e;
+  border: none;
+  text-align: left;
+  color: #fff;
+  display: inline-block;
+  padding: 24px;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1.44;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .job-card {
+    width: calc(50% - 8px);
+    max-width: calc(50% - 8px);
+    flex: 1 1 calc(50% - 8px);
+    font-size: 1.125rem;
+  }
+}
+
+.job-card h3 {
+  font-size: 1.25rem;
+  margin: 0 0 12px;
+}
+
+@media (min-width: 768px) {
+  .job-card h3 {
+    font-size: 1.5rem;
+  }
+}
+
+.job-card ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.job-card li {
+  margin-bottom: 6px;
+}
+
+.job-card p,
+.job-card li {
+  color: #bccce7;
+}
+
+.list-label {
+  color: #e29ba7;
+  margin-right: 6px;
+}
+
+.project-links {
+  margin-top: 12px;
+  display: flex;
+  gap: 16px;
+}
+
+.part {
+  margin: 0 0 32px;
+  --project-detail-scale: 1.2;
+}
+
+.part p {
+  text-align: left;
+  text-indent: 2em;
+  font-size: calc(1rem * var(--project-detail-scale));
+}
+
+/* 详情正文：段落保持首行缩进与间距 */
+.project-detail-text p {
+  margin: 0 0 14px;
+}
+
+.project-detail-text {
+  text-align: left;
+  font-size: calc(1rem * var(--project-detail-scale));
+  line-height: 1.44;
+  text-indent: 2em;
+  --link-color: #e2c4a2;
+  --link-hover: #f4d7b2;
+}
+
+/* 注释风格正文：用于 troubleshooting 或其他说明块 */
+.project-detail-text--comment {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  color: #528376;
+  font-style: italic;
+  text-indent: 0;
+  --link-color: #528376;
+  --link-hover: #72a899;
+}
+
+/* 覆盖 .part p 的首行缩进，保证注释段落不缩进 */
+.project-detail-text--comment p {
+  text-indent: 0;
+}
+
+
+/* 列表容器：继承字号，抵消正文缩进 */
+.detail-list {
+  font-size: inherit;
+  margin: 10px 0 14px 0;
+  text-align: left;
+  padding-left: 2em;
+  text-indent: 0;
+}
+
+/* 列表行：斜体，每条独立一行 */
+.detail-list-line {
+  display: block;
+  margin: 0 0 10px;
+  font-style: italic;
+}
+
+/* 列表编号：固定宽度对齐正文起始位置 */
+.detail-list-num {
+  display: inline-block;
+  width: 2em;
+}
+
+
+.project-detail-text a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.project-detail-text a::after {
+  content: "";
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: 0.1em;
+  vertical-align: -0.08em;
+  opacity: 0.85;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z'/%3E%3Cpath d='M19 19H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z'/%3E%3Cpath d='M19 19H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+.project-detail-text a:hover {
+  color: var(--link-hover);
+}
+
+
+.project-detail-gallery {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* layout: "split" = 左图右文 */
+.project-detail-split {
+  display: grid;
+  gap: 18px;
+  align-items: start;
+}
+
+.project-detail-gallery--split {
+  grid-template-columns: 1fr;
+  margin-top: 0;
+}
+
+.project-detail-split-text {
+  min-width: 0;
+}
+
+/* split 布局右侧文字与图片左对齐，取消首行缩进 */
+.project-detail-split-text .project-detail-text,
+.project-detail-split-text .project-detail-text p {
+  text-align: left;
+  text-indent: 0;
+}
+
+/* >=768px: gallery 默认两列，split 左大右小，stack 强制单列 */
+@media (min-width: 768px) {
+  .project-detail-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-detail-gallery.project-detail-gallery--split {
+    grid-template-columns: 1fr;
+  }
+
+  .project-detail-split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    margin-block: 60px;
+  }
+
+  .project-detail-gallery.project-detail-gallery--stack {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.project-detail-thumb {
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  display: block;
+  width: 100%;
+  line-height: 0;
+  aspect-ratio: 16 / 9;
+  cursor: zoom-in;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-detail-item {
+  margin: 0;
+}
+
+.project-detail-item--narrow {
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-detail-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+.project-detail-thumb--contain img {
+  /* 缩略图需要完整显示时用 contain，避免裁切 */
+  object-fit: contain;
+  background: rgba(18, 18, 18, 0.6);
+}
+
+.project-detail-thumb--auto {
+  aspect-ratio: auto;
+}
+
+.project-detail-thumb--auto img {
+  height: auto;
+  object-fit: contain;
+}
+
+.project-detail-thumb:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.project-detail-thumb:hover img {
+  transform: scale(1.02);
+}
+
+.project-detail-caption {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(202, 202, 202, 0.7);
+  text-align: left;
+}
+
+.project-detail-video {
+  margin-top: 18px;
+  max-width: 900px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-detail-video-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #1d1d1d;
+}
+
+.project-detail-video-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 24px;
+  /* 让 padding 计入容器可视盒模型，避免边界计算与实际渲染不一致。 */
+  box-sizing: border-box;
+  /* 裁切缩放/平移后超出可视区的图像内容。 */
+  overflow: hidden;
+}
+
+.lightbox img {
+  max-width: min(96vw, 1600px);
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  /* 与 JS 的中心缩放和平移公式保持一致。 */
+  transform-origin: center center;
+  /* 提示浏览器优化 transform 更新，提升缩放/拖拽流畅度。 */
+  will-change: transform;
+  user-select: none;
+  /* 禁用浏览器默认拖图（避免拖影，与自定义平移冲突）。 */
+  -webkit-user-drag: none;
+  /* 禁用默认触控手势，交由 Pointer 事件处理拖拽。 */
+  touch-action: none;
+}
+
+.part-header {
+  display: block;
+  font-size: calc(1.125rem * var(--project-detail-scale));
+  margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+  .part-header {
+    font-size: calc(1.5rem * var(--project-detail-scale));
+  }
+}
+
+.content-placeholder iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  display: block;
+}
+
+/* Override title overlay so it does not cover video controls */
+.portfolio-top h2 {
+  position: static;
+  top: auto;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 12px 16px;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .portfolio-top h2 {
+    margin: 0;
+    padding: 16px;
+    height: auto;
+  }
+}

@@ -1,0 +1,18 @@
+﻿{
+    "slug":  "murder",
+    "title":  "Murder",
+    "year":  2024,
+    "role":  "Gameplay (UE5, C++)",
+    "duration":  "1 week",
+    "tags":  [
+                 "Unity",
+                 "C#"
+             ],
+    "videoSrc":  "/media/output_murder.mp4",
+    "poster":  "",
+    "summary":  "Recoil animation, decals, weapon switch, enemy AI tweaks.",
+    "links":  {
+                  "demo":  "",
+                  "github":  ""
+              }
+}

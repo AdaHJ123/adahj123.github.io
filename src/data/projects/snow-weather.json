@@ -1,0 +1,285 @@
+﻿{
+    "slug":  "snow-weather",
+    "title":  "Snow Weather",
+    "year":  2025,
+    "role":  "Technical Artist (UE5, Blueprint)",
+    "duration":  "1 week",
+    "tags":  [
+                 "Unreal",
+                 "Blueprint",
+                 "Niagara"
+             ],
+    "youtubeId":  "3mrqVRYlJdM",
+    "videoSrc":  "/media/snow.mp4",
+    "poster":  "",
+    "summary":  "As part of an advanced weather system in Unreal Engine 5, I implemented a modular snowy weather feature that dynamically integrates with the existing sky and lighting system. I also used Unreal Engine's Landscape tool to sculpt a basin-shaped terrain and added assets to create a snowy wilderness scene to showcase the snowy weather feature.",
+    "sections":  [
+                     {
+                         "id":  "introduction",
+                         "title":  "Introduction",
+                         "layout":  "stack",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/overview_event.png",
+                                            "alt":  "Snow weather blueprint overview event graph",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        }
+                                    ],
+                         "afterText":  "To extend the Sky Blueprint for snowy weather, I created animated snow coverage using Material Parameter Collections, Lerp masking, and Blueprint timelines, allowing snow to gradually appear across landscape and static meshes. Then I used Niagara system to create snowflake and snow smoke effects that follow the player camera. Their spawn origin and radius are calculated in real time using custom modules based on the camera’s position and movement speed. Footprints are procedurally generated with Niagara decals, triggered by animation notifies synchronized with footstep timing. Lastly I added wind and footstep sounds that react to the current weather preset. The full implementation breaks down into the following modular steps and design patterns:"
+                     },
+                     {
+                         "id":  "lighting-adjustments",
+                         "layout":  "split",
+                         "text":  "<p><strong>Lighting Adjustments:</strong><br>Realistic snowy lighting was achieved by fine-tuning Directional Light, Skylight, Sky Atmosphere, and Exponential Height Fog to simulate cold, diffuse conditions.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/lighting_adjustment.png",
+                                            "alt":  "Lighting parameter Reference For Snowy Weather (source: Udemy Vince Petrelli)",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "data-driven-presets",
+                         "layout":  "split",
+                         "text":  "<p><strong>Data-Driven Weather Presets & Params Organization:</strong><br>Designed a flexible structure using Primary Data Assets to switch between multiple weather types (e.g., Sunny and Snowy) with a single dropdown in the editor. Also implemented Blueprint Structs to categorize lighting and fog parameters, making the system scalable and easy to maintain.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/Data_Driven_Weather_Presets.png",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "one-click-switching",
+                         "layout":  "split",
+                         "text":  "<p><strong>One-Click Weather Switching:</strong><br>Added an enum-based logic in Blueprints to apply preset weather conditions settings and fix the time to daytime during snowy weather, ensuring visual consistency across transitions. <a href=\"https://photos.app.goo.gl/JVUXNNiafho3H6kE7\" target=\"_blank\" rel=\"noreferrer\">Full blueprint function</a></p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/one-click_weather_switching.png",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio": "auto"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "snow-mask-system",
+                         "layout":  "split",
+                         "text":  "<p><strong>Snow Mask System:</strong><br>Created a directional snow mask using vertex normals to control accumulation based on surface orientation — ensuring snow only appears on upward-facing surfaces regardless of mesh rotation. Used a material instance parameter to adjust snow strength in real time for blending snow.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/snow_mask.gif",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "reusable-material-functions",
+                         "layout":  "split",
+                         "text":  "<p><strong>Reusable Material Functions:</strong><br>Built a multi-use material function to blend snow textures onto both landscapes and static meshes, featuring a toggle to control snow visibility specifically on landscape surfaces. Integrated a Material Parameter Collection (MPC) to enable Blueprint-controlled snow visibility across all materials without direct references. <a href=\"https://photos.app.goo.gl/8ofyg6ZyQBtAB8pY9\" target=\"_blank\" rel=\"noreferrer\">Full blueprint material function</a></p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/reusable_mat_funcs.png",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "snow-integration",
+                         "layout":  "split",
+                         "text":  "<p><strong>Snow Integration for Landscape, Objects and Foliage:</strong><br>Applied snow blending to props and foliage by modifying materials and preserving transparency through opacity mask logic. For landscape, integrated a Voronoi-based texture bombing technique to break up UV tiling repetition, producing a more realistic snow distribution instead of obvious texture patterns.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/snow_integration.png",
+                                            "thumbRatio":  "4 / 3"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "transition-text",
+                         "text":  "After building the material-based snow coverage for both landscapes and static meshes, I added features to make the environment feel more immersive and responsive. These included camera-following snowfall, animated buildup of snow, dynamic footprints that appear only in snowy weather, and ambient wind and footstep audio for a richer atmosphere."
+                     },
+                     {
+                         "id":  "animation-notify",
+                         "layout":  "split",
+                         "text":  "<p><strong>Animation Notify:</strong><br>Created a custom Blueprint class inheriting from UAnimNotify and overrode the Received_Notify function to trigger events at specific points in the animation. Notifies were added to the running animation to mark foot contact.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/anim_notify.png",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "animation-based-foot-detection",
+                         "layout":  "split",
+                         "text":  "<p><strong>Animation-Based Foot Detection:</strong><br>Created a custom Blueprint Macro Library for <em>UAnimNotify</em> and defined an IsSunny macro to check the IsSnowing parameter from the Material Parameter Collection (<a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/using-material-parameter-collections-in-unreal-engine\" target=\"_blank\" rel=\"noreferrer\">MPC</a>), to ensure footprints only appear during snowy weather. Added an EFootType enum to the notify class to determine which foot (left or right) is landing, avoiding the need for duplicate notify classes. For accurate footprint placement, a downward <a href=\"https://www.youtube.com/watch?v=6ZFnPliFSX0\" target=\"_blank\" rel=\"noreferrer\">LineTraceForObjects</a> is performed from either the foot_l or foot_r socket. The trace direction is calculated using the inverted Up Vector of the mesh scaled by 100 units, and the result is used to detect ground surfaces. Due to the const nature of the <a href=\"https://www.unrealengine.com/ja/blog/crash-course-in-animation-notifies\" target=\"_blank\" rel=\"noreferrer\">Received_Notify</a> function, a local variable is used to dynamically store and switch the current bone name. The trace is limited to <em>WorldStatic</em> objects, and debug draw is set to Persistent to visualize hit locations during gameplay. The line traces work correctly for both feet and are ready to spawn footprints.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/anim_based_foot.png",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "decal-material",
+                         "layout":  "split",
+                         "splitGalleryGapDesktop":  "4px",
+                         "splitGalleryGapMobile":  "0px",
+                         "text":  "<p><strong>Decal Material:</strong><br>Prepared a decal material sample for footprint generation. Decals can be projected onto static meshes, skeletal meshes, and landscapes, making them well-suited for footprint effects. The sample material used a translucent texture, but stretching issues may occur on sloped surfaces. By using triplanar projection and <em>SceneTexture:WorldNormal</em>, more even projection was achieved and stretching artifacts were resolved. A custom UV triplanar method was also integrated, allowing the same result to be achieved with only a single texture sample, improving the decal's adaptability and stability.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/decal_mat1.png",
+                                            "thumbRatio":  "2/1"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/decal_mat2.png",
+                                            "thumbRatio":  "2/1"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "footprint-niagara-system",
+                         "layout":  "split",
+                         "splitGalleryGapDesktop":  "8px",
+                         "splitGalleryGapMobile":  "0px",
+                         "text":  "<p><strong>Footprint Niagara System:</strong><br>Built a Niagara-based footprint system that dynamically spawns left and right decals. Prepared a decal material using Decal Color instead of Particle Color to support Niagara-driven opacity and color blending, and created two material instances for each foot. Designed two Niagara systems using <em>Decal Renderers</em> with customizable fade timing and orientation. In the notify blueprint, used a LineTrace from foot sockets to detect surface hit locations. Used bone name check to selected the corresponding Niagara system for each foot. Rotation is inherited from the character’s actor rotation to ensure correct decal alignment. Spawned systems using <em>Spawn System at Location</em>, passing in hit location and rotation. Built a macro to check current weather conditions from the Material Parameter Collection, ensuring footprints only spawn when it’s snowing. This Niagara system fully automates decal lifecycle-spawning, fading, and destruction. <a href=\"https://photos.app.goo.gl/C7HcNThRfFT1sZ7P8\" target=\"_blank\" rel=\"noreferrer\">Niagara System Basic Concepts</a></p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/foot_niagara1.gif",
+                                            "thumbRatio":  "2 / 1"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/foot_niagara2.png",
+                                            "thumbRatio":  "16 / 9"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "follow-camera-niagara-system-level-module",
+                         "layout":  "split",
+                         "splitGalleryGapDesktop": "2px",
+                         "splitGalleryColumnsDesktop":  2,
+                         "splitGalleryColumnsMobile":  1,
+                         "text":  "<p><strong>Follow Camera Niagara System Level Module:</strong><br>Built a reusable Niagara system level module that dynamically spawns snowflakes/storm particles in front of the player camera based on position and movement speed. This Niagara module queries camera properties each frame and outputs them as system parameters. Calculated the dynamic spawn radius by comparing the camera's velocity against a default threshold, ensuring adaptive coverage during player's movement. Computed a spawn origin offset from the camera’s forward and up vectors to always place particles slightly ahead in player's view. Parameters were exposed to all emitters for efficient reuse. Wrapped the setup as a template system and configured it as a library asset for easy reuse across different particle systems. <a href=\"https://photos.app.goo.gl/8LGHhXL6z8HzmpCc6\" target=\"_blank\" rel=\"noreferrer\">Follow Camera Settings Concepts</a></p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/NMSCam1.png",
+                                            "thumbRatio":  "4/3"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/NMSCam2.png",
+                                            "thumbRatio":  "4/3"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/NMSCam3.png",
+                                            "thumbRatio":  "4/3"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/NMSCam4.png",
+                                            "thumbRatio":  "4/3"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "snow-storm-particle-system",
+                         "layout":  "split",
+                         "splitGalleryGapDesktop": "2px",
+                         "splitGalleryColumnsDesktop":  2,
+                         "splitGalleryColumnsMobile":  1,
+                         "text":  "<p><strong>Snow Storm Particle System (Niagara-Based Weather Effect):</strong><br>Created a modular Niagara particle system simulating dynamic snowfall with layered visual effects. The base emitter spawns snow particles using a cylinder shape and follows camera movement via previous created Niagara system level module parameters. A custom dynamic input script controls particle opacity with random values, enabling easy adjustments via Blueprint. Added a secondary emitter for fine snow smoke using a sub-UV animated texture and additive blend material. Used depth fade in the material to smoothly blend particles into surfaces and remove harsh edges. Wind forces and sprite randomness were applied to simulate natural drift, while fixed bounds were configured at the system level to prevent particle clipping during movement. This snow storm system is optimized for visual quality and performance, with parameters exposed for future emitter reuse and Blueprint integration.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/1snowParticleEmitter.png"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/2SnowParticleOpacity.png"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/3SnowAprticleParamFilledInForFollow.png"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/4stormParticleFixedBound.png"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/smokeParticle.png"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/smokeParticle2.png"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "niagara-blueprint-control-system-component-toggle",
+                         "layout":  "split",
+                         "splitGalleryGapDesktop":  "4px",
+                         "splitGalleryGapMobile":  "0px",
+                         "text":  "<p><strong>Niagara Blueprint Control & System Component Toggle:</strong><br>Created a Blueprint function called <em>ToggleNiagaraSystemComponent</em> to toggle Niagara weather effects and control key parameters dynamically. Created a reusable macro to enable/disable Niagara system components using Set Auto Activate and Set Active, allowing seamless switching of weather presets like snow and sunny. Promoted particle system values such as <em>spawn rate</em>, <em>opacity range</em>, and <em>sprite size</em> to Niagara User Parameters, then exposed them in Blueprint using a custom struct (S_SnowParticlesSettings). A macro (Set Snow Particles Settings) was implemented to set these parameters at runtime via Set Niagara Variable Float (by name), enabling real-time adjustments through the details panel. This setup allows designers to fine-tune visual parameters for snowy weather, all through Blueprint with clean parameter organization and runtime flexibility. <a href=\"https://photos.app.goo.gl/wQ35RVzHSAAwPmDv9\" target=\"_blank\" rel=\"noreferrer\">Full SetSnowParticlesSetting BP</a></p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/userParamsStruct.png",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/runtimeEditerSnowParticleParams.png",
+                                            "thumbRatio":  "2/1"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "snow-coverage-animation",
+                         "layout":  "split",
+                         "splitGalleryGapDesktop":  "4px",
+                         "text":  "<p><strong>Snow Coverage Animation:</strong><br>Implemented a dynamic snow accumulation effect that smoothly blends snow onto objects and landscapes based on runtime weather changes. This system replaces the former instant snow toggle with a visually natural buildup using material-driven Lerp blending and Blueprint-driven timeline animation. To add randomness, overlaid a tiling noise texture (texture-bombing) onto the Lerp alpha input, achieving non-uniform, natural-looking snow accumulation. Refactored the Dynamic Sky Blueprint for better usability and modularity. Grouped macros by category (e.g. Day/Night Settings, Weather, Clouds) to improve graph clarity. Synchronized all exposed variable defaults-such as moonlight intensity, cloud brightness, and weather presets-between the Blueprint and Details panel to ensure consistency on re-instancing.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/bombMF.png",
+                                            "thumbRatio":  "2/1"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/dataAsset.png",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "snow-coverage-animation-gifs",
+                         "layout":  "grid",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/no_texture_bombing.gif",
+                                            "alt":  "No texture bombing technique"
+                                        },
+                                        {
+                                            "src":  "/media/projects/snow-weather/texture_bombing.gif",
+                                            "alt":  "With texture bombing technique"
+                                        }
+                                    ]
+                     },
+                     {
+                         "id":  "footstep-ambient-wind-sound-integration",
+                         "layout":  "split",
+                         "text":  "<p><strong>Footstep & Ambient Wind Sound Integration:</strong><br>Integrated dynamic sound effects to enhance immersion in snowy environments. Used an animation notify blueprint (<em>AN_SpawnFootprints</em>) to trigger footstep particles and play randomized audio from a set of several snow footstep sounds, providing variety and realism during character movement. Additionally, ambient wind audio (winterWind) was added via a dynamically spawned audio component, which is initialized at runtime to avoid crashes caused by global audio references at Event BeginPlay. This component is safely stored in a local variable and played with the snow weather effect for atmospheric enhancement.</p>",
+                         "images":  [
+                                        {
+                                            "src":  "/media/projects/snow-weather/footstep_sound_integration.png",
+                                            "thumbFit":  "contain",
+                                            "thumbRatio":  "auto"
+                                        }
+                                    ]
+                     }
+                 ],
+    "links":  {
+                  "demo":  "",
+                  "github":  ""
+              }
+}

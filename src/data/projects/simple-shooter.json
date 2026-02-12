@@ -1,0 +1,18 @@
+﻿{
+    "slug":  "simple-shooter",
+    "title":  "Simple Shooter",
+    "year":  2024,
+    "role":  "Gameplay (UE5, C++)",
+    "duration":  "2 weeks",
+    "tags":  [
+                 "Unreal",
+                 "C++"
+             ],
+    "videoSrc":  "/media/snow.mp4",
+    "poster":  "",
+    "summary":  "Recoil animation, decals, weapon switch, enemy AI tweaks.",
+    "links":  {
+                  "demo":  "",
+                  "github":  ""
+              }
+}
