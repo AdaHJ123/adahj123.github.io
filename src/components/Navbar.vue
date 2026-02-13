@@ -142,7 +142,7 @@ function goHome(e) {                     // 点击名字时触发的函数
   /* width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw); */
-  /* �?用百分比，不要用 100vw + calc(...) */
+  /* 用百分比，不要用 100vw + calc(...) */
   width: 100%;
   margin: 0;                /* 删掉 margin-left/right �?calc */
   padding-inline: clamp(12px, 4vw, 48px); /* 小屏12px，大屏最多48px */
