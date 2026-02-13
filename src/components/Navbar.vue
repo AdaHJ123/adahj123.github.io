@@ -173,10 +173,8 @@ function goHome(e) {                     // 点击名字时触发的函数
   color: inherit;
   font-size: clamp(1.05rem, 4.6vw, 2rem);
   line-height: 1.1;
-  min-width: 0;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  flex-shrink: 0;
 }
 .actions {
   display: flex;
@@ -215,6 +213,15 @@ function goHome(e) {                     // 点击名字时触发的函数
   transform: translateY(-1px);
   background: #e2e1e1;
   border-color: #e2e1e1;
+}
+
+@media (max-width: 820px) {
+  .brand {
+    min-width: 0;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 </style>
 
