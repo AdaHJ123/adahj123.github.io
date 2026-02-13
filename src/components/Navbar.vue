@@ -145,7 +145,8 @@ function goHome(e) {                     // 点击名字时触发的函数
   /* �?用百分比，不要用 100vw + calc(...) */
   width: 100%;
   margin: 0;                /* 删掉 margin-left/right �?calc */
-  padding-inline: clamp(16px, 4vw, 48px); /* 小屏16px �?大屏最�?8px */
+  padding-inline: clamp(12px, 4vw, 48px); /* 小屏12px，大屏最多48px */
+  box-sizing: border-box;
 }
 
 .nav__inner {
@@ -154,12 +155,13 @@ function goHome(e) {                     // 点击名字时触发的函数
   max-width: 1200px;
   margin-inline: auto;
   /* margin: 0 auto; */
-  padding-block: 20px;
+  padding-block: clamp(12px, 2.8vw, 20px);
   /* padding: 20px 32px;  */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: clamp(8px, 2vw, 24px);
+  min-width: 0;
 
   /* 测试边框大小�?*/
   /* outline: 3px solid red;   */
@@ -169,15 +171,21 @@ function goHome(e) {                     // 点击名字时触发的函数
   font-weight: 700;
   text-decoration: none;
   color: inherit;
-  font-size: 2.0rem; 
+  font-size: clamp(1.05rem, 4.6vw, 2rem);
+  line-height: 1.1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .actions {
   display: flex;
-  gap: 20px;
+  gap: clamp(8px, 2.2vw, 20px);
   align-items: center;
+  flex-shrink: 0;
 }
 .icon {
-  --size: 60px;
+  --size: clamp(34px, 10vw, 60px);
   width: var(--size);
   height: var(--size);
   display: inline-flex;
@@ -189,8 +197,9 @@ function goHome(e) {                     // 点击名字时触发的函数
   text-decoration: none;
 
   /* 图标多大：用“字体大小”来控制 */
-  font-size: 44px;    /* 图标=22px；想大或小就改这个数 */
+  font-size: clamp(20px, 7vw, 44px);    /* 图标=22px；想大或小就改这个数 */
   line-height: 1;
+  flex: 0 0 auto;
 
   transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
 }
