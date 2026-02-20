@@ -13,7 +13,7 @@
   margin-bottom: 20px;
 }
 
-.portfolio-close {
+.portfolio-close-button {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -23,7 +23,7 @@
   background: linear-gradient(120deg, rgba(138, 180, 255, 0.18), rgba(226, 155, 167, 0.16));
   color: #d7e6ff;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.0rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -31,19 +31,62 @@
   transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
-.portfolio-close:hover {
+.portfolio-close-button:hover {
   color: #ffffff;
   border-color: rgba(138, 180, 255, 0.9);
   background: linear-gradient(120deg, rgba(138, 180, 255, 0.28), rgba(226, 155, 167, 0.22));
   transform: translateY(-1px);
 }
 
-.portfolio-close small {
-  font-size: 0.7rem;
+
+.section-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(138, 180, 255, 0.6);
+  background: linear-gradient(120deg, rgba(138, 180, 255, 0.18), rgba(226, 155, 167, 0.16));
+  color: #d7e6ff;
+  text-decoration: none;
+  font-size: 1.0rem;
   letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 0 0 1px rgba(138, 180, 255, 0.15), 0 10px 22px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
-.close-icon {
+.section-button:hover {
+  color: #ffffff;
+  border-color: rgba(138, 180, 255, 0.9);
+  background: linear-gradient(120deg, rgba(138, 180, 255, 0.28), rgba(226, 155, 167, 0.22));
+  transform: translateY(-1px);
+}
+
+.section-button::before {
+  content: "";
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(138, 180, 255, 0.7);
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.35);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5l10 7-10 7V5z' fill='none' stroke='%23d7e6ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px 24px;
+  transition: border-color 0.15s ease, background-color 0.15s ease, background-image 0.15s ease;
+}
+
+.section-button:hover::before {
+  border-color: rgba(215, 230, 255, 0.95);
+  background-color: #d7e6ff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5l10 7-10 7V5z' fill='none' stroke='%230b1220' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.back-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -57,7 +100,7 @@
   line-height: 1;
 }
 
-.close-icon svg {
+.back-icon svg {
   width: 18px;
   height: 18px;
 }
@@ -161,10 +204,15 @@
   margin-right: 6px;
 }
 
-.project-links {
+.button-wrap {
   margin-top: 12px;
   display: flex;
   gap: 16px;
+}
+
+.button-wrap--center {
+  justify-content: center;
+  width: 100%;
 }
 
 .part {

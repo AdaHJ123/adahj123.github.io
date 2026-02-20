@@ -1,18 +1,98 @@
-﻿{
-    "slug":  "toon-tank",
-    "title":  "Toon Tank",
-    "year":  2024,
-    "role":  "Gameplay (UE5, C++)",
-    "duration":  "2 weeks",
-    "tags":  [
-                 "Unreal",
-                 "C++"
-             ],
-    "videoSrc":  "/media/output_toontank1.0.mp4",
-    "poster":  "",
-    "summary":  "Recoil animation, decals, weapon switch, enemy AI tweaks.",
-    "links":  {
-                  "demo":  "",
-                  "github":  ""
-              }
+{
+    "slug": "toon-tank",
+    "title": "Toon Tank",
+    "year": 2024,
+    "role": "Gameplay (UE5, C++)",
+    "duration": "1 week",
+    "tags": [
+        "Unreal",
+        "C++"
+    ],
+    "videoSrc": "/media/output_toontank1.0.mp4",
+    "youtubeId": "ibaky020TmQ",
+    "poster": "",
+    "summary": "A UE5 C++ tank-combat prototype focused on turret aiming, enemy tower behavior, health/damage flow, and a clean win/lose game loop.",
+    "descriptionLong": "Toon Tank is a short UE5 gameplay prototype built with C++. The project focuses on gameplay fundamentals: responsive aiming, readable combat feedback, simple enemy AI, and clear game-state transitions. The goal was to build a small but complete combat loop from input to victory/defeat handling.",
+    "sections": [
+        {
+            "id": "introduction",
+            "text": "<p>This game is based on a UE intro course from Udemy taught by Gamedev.tv. The game involves the player controlling a tank to destroy enemy towers, which also fire back at the player. I have implemented common functionalities by C++ scripts in the game, such as creating a tank that can move throughout the world, handling input (WASD movement), creating an enemy turret class (enemy), adding fire functionality with projectiles, adding health, damage, and destruction mechanics to the game, incorporating special effects (smoke, explosions, sounds), and adding winning/losing conditions with HUD displays. I will provide a detailed explanation of these implemented features, along with relevant documentation links, the code I used from the course, and editor content.</p>"
+        },
+        {
+            "id": "play-toon-tank",
+            "buttonAlign": "center",
+            "button": {
+                "label": "Play Toon Tank",
+                "href": "https://dhatri000.itch.io/toontank"
+            }
+        },
+        {
+            "id": "Fire Functionality With Projectiles",
+            "title": "Implementations",
+            "layout": "split",
+            "images": [
+                {
+                    "src": "/media/projects/toon-tank/spawnProjectile.gif",
+                    "thumbFit": "contain",
+                    "thumbRatio": "auto"
+                }
+            ],
+            "text": "<p><strong>Fire Functionality With Projectiles:</strong><br>Create a fire function to spawn projectiles (actors) and call it in both the player's Tank class and the Tower class. Bind it to the fire action mapping so the player can operate it using the left mouse button. In the Tower class, use a timer function to call the fire function every so often when the player is detected within the firing range.</p><p>To spawn an object in C++ that is based on a Blueprint, define a projectile variable using <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/tsubclassof?application_version=4.27\" target=\"_blank\" rel=\"noreferrer\">TSubclassOf&lt;&gt;</a>. This allows us to set the corresponding projectile Blueprint in both the player and tower Blueprints. It is important to use <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-classes-in-unreal-engine?application_version=5.3\" target=\"_blank\" rel=\"noreferrer\">UClass</a> for the projectile instead of UObject because UClass has built-in functionality that enables reflection between C++ and Blueprints, allowing information to flow between them. Using a raw C++ class will not generate a static mesh in the world, resulting in an invisible actor. <a href=\"https://photos.app.goo.gl/xbJtPxqTNiX6upgV6\" target=\"_blank\" rel=\"noreferrer\">More notes about TSubclassOf&lt;&gt;</a>.</p><p>Add UE built-in <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/implementing-projectiles-in-unreal-engine\" target=\"_blank\" rel=\"noreferrer\"><strong>UProjectileMovementComponent</strong></a> to the projectile class, and this handles the movement for the projectile object. We can customize the movement by setting parameters on this component.</p><p>Hit Events are implemented using multicast <a href=\"https://stackoverflow.com/questions/9568150/what-is-a-c-delegate/9568485#9568485\" target=\"_blank\" rel=\"noreferrer\">delegates</a> for detecting when a projectile hits an object. This was achieved by creating a function called OnHit and binding it to the OnComponentHit delegate. The projectile's mesh, which inherits from the <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/UPrimitiveComponent\" target=\"_blank\" rel=\"noreferrer\">UPrimitiveComponent</a> class, uses this delegate. When the projectile hits any component, the OnHit function is called, allowing other tasks to be executed, such as destroying the projectile.</p>"
+        },
+        {
+            "id": "Health, Damage And Destruction",
+            "layout": "split",
+            "images": [
+                {
+                    "src": "/media/projects/toon-tank/HealthDamage.gif",
+                    "thumbFit": "contain",
+                    "thumbRatio": "auto"
+                }
+            ],
+            "text": "<p><strong>Health, Damage And Destruction:</strong><br>Create a Health component, make it attached to both player and turrent objects. Write DamageTaken in HealthComponet cpp file, and bound this tunction to the pawns' delegates (<a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/BlueprintAPI/Game/Damage/OnTakeAnyDamage?application_version=5.4\" target=\"_blank\" rel=\"noreferrer\">OnTakeAnyDamage</a>).</p><p>Use generic function <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/Kismet/UGameplayStatics/ApplyDamage?application_version=5.4\" target=\"_blank\" rel=\"noreferrer\">ApplyDamage</a> to broadcast damage event, so it can trigger the functions bound to OnTakeAnyDamage delegate. We generate damage event when projectile hits actors, so ApplyDamge is called in projectile.cpp.</p><p>Create a GameModeBase class called ToonTanksGameMode, and then create a HandleDestruction function in the BasePawn class, which doesn’t require any parameters. The HandleDestruction function will handle special effects like sounds and visual effects for damage events. After that, create an ActorDied function in the GameModeBase class, and use it to call the HandleDestruction function. Call the ActorDied function when the health reaches 0 in HealthComponent.cpp. To access the ActorDied function from the GameModeBase class, use <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/Kismet/UGameplayStatics/GetGameMode?application_version=5.4\" target=\"_blank\" rel=\"noreferrer\">GetGameMode</a> to retrieve the ToonTanksGameMode object in HealthComponent.cpp.</p><p>Make a custom player controller class, then access the <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/Kismet/UGameplayStatics/GetPlayerController?application_version=4.27\" target=\"_blank\" rel=\"noreferrer\">PlayerController</a> to <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/BlueprintAPI/Input/DisableInput\" target=\"_blank\" rel=\"noreferrer\">disable user input</a> and <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/APlayerController\" target=\"_blank\" rel=\"noreferrer\">disable showing the mouse cursor</a> when player tank is dead. Create a blueprint based on this player controller to set the mouse cursor type.</p>"
+        },
+        {
+            "id": "Timer & HUD Displays(Win/Lose)",
+            "layout": "split",
+            "splitGalleryGapDesktop": "8px",
+            "splitGalleryGapMobile": "0px",
+            "images": [
+                {
+                    "src": "/media/projects/toon-tank/TimerHUD.gif",
+                    "thumbFit": "contain",
+                    "thumbRatio": "auto"
+                },
+                {
+                    "src": "/media/projects/toon-tank/LoseHUD.gif",
+                    "thumbFit": "contain",
+                    "thumbRatio": "auto"
+                }
+            ],
+            "text": "<p><strong>Timer &amp; HUD Displays(Win/Lose):</strong><br>Create a <a href=\"https://photos.app.goo.gl/5oiUeaYf7oMqRRN58\" target=\"_blank\" rel=\"noreferrer\">HandleGameStart()</a> for the ToonTankGameMode class and call it in BeginPlay(). This allows the Game Mode to determine when the game starts, and the player will not be allowed to move until the countdown timer finishes. Then in HandleGameStart(), set a timer using <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/FTimerManager\" target=\"_blank\" rel=\"noreferrer\">FTimerDelegate</a>, binding <a href=\"https://photos.app.goo.gl/Ekk5hDuaaPZt1oFu8\" target=\"_blank\" rel=\"noreferrer\">SetPlayerEnabledState()</a> from the player controller to it. This allows us to have a function callback for the timer that takes input parameters.</p><p>In ToonTankGameMode.h, create a function called <a href=\"https://photos.app.goo.gl/P7pxzyVq5bhvbgcLA\" target=\"_blank\" rel=\"noreferrer\">StartGame()</a> and mark this with <a href=\"https://unrealcommunity.wiki/6100e8169c9d1a89e0c34251\" target=\"_blank\" rel=\"noreferrer\">blueprint implementable event macro</a>, and we don't need to give it a function body in c++ because UE expects us to implement the functionality for this on the blueprint side. But we can call it from c++ and the event in the blueprint will be fired off. Call StartGame() in HandleGameStart() just after we get the player pawn and player controller. For adding logic that we connect to StartGame() event, create a <a href=\"https://photos.app.goo.gl/uXZq3rkzk2Shk72JA\" target=\"_blank\" rel=\"noreferrer\">widget</a> blueprint called StartGame in Editor. Widget is good for displaying text on the screen. After setting text in StartGame widget, add this to the viewport, so the player can see.</p><p>Since in the C++ script we've already created a PlayerEnableTimerHandle to manage the start timer, we need to create a timer blueprint for the <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/umg-ui-designer-quick-start-guide-in-unreal-engine\" target=\"_blank\" rel=\"noreferrer\">HUD</a> display, which is entirely different and independent from the C++ side. In the StartGame widget blueprint we just created, add a countdown float variable. Every frame of the game, subtract the countdown float by Delta time, which is the amount of time passed since the previous frame. This way, the countdown float will constantly decrement, giving us a running countdown. Use the <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/math-material-expressions-in-unreal-engine\" target=\"_blank\" rel=\"noreferrer\">Ceil</a> node to round the countdown's decimal value, and then use the <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/flow-control-in-unreal-engine\" target=\"_blank\" rel=\"noreferrer\">Switch</a> node to pass the rounded countdown value. The Switch node has multiple execution lines, and it will only execute one based on the input. We can use this to control the HUD display numbers or prompt messages. Mark the display text in StartGame widget as \"Is Variable\", so we can access this in its <a href=\"https://photos.app.goo.gl/JKt1xiQJuhd37qdn6\" target=\"_blank\" rel=\"noreferrer\">event graph</a>. Let the switch do the execution of what to display in the display text.</p><p>Use the same method to write the <a href=\"https://photos.app.goo.gl/GpJ9XqmRsXojAZxy7\" target=\"_blank\" rel=\"noreferrer\">GameOver</a> blueprint implementable event. After the player destroys all the towers or is killed by a tower, use widgets to display whether the player won or lost. Except, GameOver has a bWonGame parameter. For the lost condition, call the GameOver function if the dead actor is the tank. For the won condition, call it if the dead actor is a tower and when the number of towers in the world reaches 0. To achieve this, create a function that can find out how many towers are in the world and return that number, this called GetTargetTowerCount(). In this function, use <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/UGameplayStatics/GetAllActorsOfClass\" target=\"_blank\" rel=\"noreferrer\">GetAllActorsOfClass</a> to find all actors in the world of the Tower class. It returns a pointer to a <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Core/TArray\" target=\"_blank\" rel=\"noreferrer\">TArray</a> that contains all actors of the Tower class.</p>"
+        },
+        {
+            "id": "Special Effects (Smoke, Explosions, Sounds, Camera shake)",
+            "layout": "split",
+            "splitGalleryGapDesktop": "8px",
+            "splitGalleryGapMobile": "0px",
+            "images": [
+                {
+                    "src": "/media/projects/toon-tank/particleSystem.gif",
+                    "thumbFit": "contain",
+                    "thumbRatio": "auto"
+                },
+                {
+                    "src": "/media/projects/toon-tank/effects.gif",
+                    "thumbFit": "contain",
+                    "thumbRatio": "auto"
+                }
+            ],
+            "text": "<p><strong>Special Effects (Smoke, Explosions, Sounds, Camera shake):</strong><br>There are special effects for when the projectile hits something. This is going to involve something called a particle system. The HitEffect asset is already provided in the course content. Create a <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/UParticleSystem?application_version=5.7\" target=\"_blank\" rel=\"noreferrer\">UParticleSystem</a> variable called HitParticles in Projectile.cpp and mark this variable EditAnywhere. Open Projectile blueprint, set up the corresponding HitEffect particle system asset. Inside the Projectile.cpp, if HitParticles is valid, then call <a href=\"https://forums.unrealengine.com/t/arguments-of-spawnemitteratlocation/243378\" target=\"_blank\" rel=\"noreferrer\">SpawnEmitterAtLocation</a> function to play HitParticles in <a href=\"https://photos.app.goo.gl/SEttdB9kk74EK6Pk8\" target=\"_blank\" rel=\"noreferrer\">OnHit</a> function. Make sure to spawn the emitter with the same rotation as the projectile actor. Place the function just before destroying the projectile actor.</p><p>After setting up hit particles, we need another particle system to follow behind the projectile as it flies throughout the world. To archeive this, add a particle system component to the projectile class. (For the hit particles, we use the spawn emitter, which dynamically creates the particles for us at runtime in the OnHit function. But for a smoke trail, we use a particle system component (<a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/UParticleSystemComponent?application_version=5.7\" target=\"_blank\" rel=\"noreferrer\">UParticleSystemComponent</a>)). Create it in the projectile's constructor using CreateDefaultSubobject. Once the particle system component is created, attach it to the root of the projectile. Then, set the Template value with the appropriate trail effect asset in the projectile blueprint.</p><p>The final step for visual effects is creating the death particle effects. Add a new particle system pointer called DeathParticles to the BasePawn class, as we want the explosion to happen when either the tank or the tower gets destroyed. Make sure the particle system pointer is exposed with UPROPERTY and set to be editable. Next, in the HandleDestruction function of the BasePawn class, call SpawnEmitterAtLocation with GetActorLocation() and GetActorRotation() as parameters. This ensures that the explosion's position and direction match the destroyed actor. Lastly, set the corresponding P_DeathEffect particle system in the blueprints for both the pawn and the turret enemy.</p><p>For sound effects in the game, we need to play sounds when firing a projectile, when it hits something, and when a pawn dies. In Projectile.cpp, use <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/USoundBase?application_version=5.7\" target=\"_blank\" rel=\"noreferrer\">USoundBase</a> class variables called LaunchSound and HitSound exposing them to blueprints with EditAnywhere macro. Still in the Projectile class, call the <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/Kismet/UGameplayStatics/PlaySoundAtLocation?application_version=4.27\" target=\"_blank\" rel=\"noreferrer\">PlaySoundAtLocation</a> function in the OnHit function with the HitSound variable right before destroying the projectile. Do this in the if condition to ensure the other actor is valid and not this or the owner. Call PlaySoundAtLocation again with the LaunchSound variable in the BeginPlay function to play sound when the projectile is spawned. Next, go into the BasePawn class and call PlaySoundAtLocation with DeathSound variable in the HandleDestruction function for explosion effect. Finally, set up the assets in the Projectile, PawnTank (player), and PawnTurret (enemy) blueprints using the corresponding sound assets from the sounds folder.</p><p>To add another finishing touch to the game that makes it feel a bit more professional, we need to shake the camera when the projectile hits somethings or when a pawn dies. To achieve this, create a new blueprint class from the UE built-in <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/python-api/class/LegacyCameraShake?application_version=5.3\" target=\"_blank\" rel=\"noreferrer\">LegacyCameraShakeclass</a> for camera shaking, as it allows easy adjustment of shake variables. Name this class <a href=\"https://photos.app.goo.gl/54YHiNWRWmnAn6aYA\" target=\"_blank\" rel=\"noreferrer\">BP_HitCameraShake</a>. In BP_HitCameraShake, modify only the location oscillation parameters in the oscillation section, and set the wave type to <a href=\"https://en.wikipedia.org/wiki/Sine_wave\" target=\"_blank\" rel=\"noreferrer\">Sine Wave</a> for smooth, back-and-forth camera movement, creating an oscillating effect. Create another camera shake for when the pawn dies and name its BP_DeathCameraShake. It is more violent than BP_HitCameraShake. For the C++ implementation, we need to create camera shake variables using the TSubclassOf wrapper to define a <a href=\"https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/UCameraShakeBase?application_version=5.7\" target=\"_blank\" rel=\"noreferrer\">UCameraShakeBase</a> pointer called HitCameraShakeClass. In Projectile.cpp, call <a href=\"https://photos.app.goo.gl/bhQFPdhZ7LKeyjym7\" target=\"_blank\" rel=\"noreferrer\">ClientStartCameraShake</a> in the OnHit function when another actor is hit. Additionally, call ClientStartCameraShake in BasePawn.cpp's HandleDestruction function. Lastly, set up BP_HitCameraShake in the Projectile blueprint, and BP_DeathCameraShakeClass in the BasePawn and PawnTurret blueprints.</p>"
+        },
+        {
+            "id": "polish",
+            "textVariant": "comment",
+            "text": "<p>My polish: In P_PawnTank, set the camera lag so that the camera lags behind and smoothly catches up, making the visuals feel more juicy. There is still a lot to explore regarding camera movement, and I may write other articles on this topic in the future.</p>"
+        }
+    ]
 }

@@ -100,9 +100,5 @@
       "textVariant": "comment",
       "text": "<p>// Troubleshooting Reference – Auto Exposure in UE5<br>// Despite disabling auto exposure and changing exposure values manually, the scene would still gradually brighten over time. Here is the discussion I found helpful to fix this issue. <a href=\"https://www.reddit.com/r/unrealengine/comments/zwk286/is_there_a_way_to_avoid_auto_exposure_entirely/\" target=\"_blank\" rel=\"noreferrer\">link for the page</a></p>"
     }
-  ],
-  "links": {
-    "demo": "",
-    "github": ""
-  }
+  ]
 }

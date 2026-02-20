@@ -1,8 +1,8 @@
 ﻿<template>
   <div class="content project-detail">
     <div class="portfolio-header">
-      <router-link class="portfolio-close" to="/">
-        <span class="close-icon" aria-hidden="true">
+      <router-link class="portfolio-close-button" to="/">
+        <span class="back-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" role="presentation" focusable="false">
             <path
               d="M19 12H5M12 19l-7-7 7-7"
@@ -52,33 +52,30 @@
             <span class="list-label">Tech:</span> {{ project.tags.join(', ') }}
           </li>
         </ul>
-        <div class="project-links" v-if="project.links && (project.links.demo || project.links.github)">
-          <a
-            v-if="project.links.demo"
-            class="url-link"
-            :href="project.links.demo"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Demo
-          </a>
-          <a
-            v-if="project.links.github"
-            class="url-link"
-            :href="project.links.github"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub
-          </a>
-        </div>
       </section>
     </div>
 
     <div v-for="section in project.sections" :key="section.id || section.title" class="part">
       <h3 v-if="section.title" class="part-header">{{ section.title }}</h3>
+      <!-- section 级按钮入口：
+           只有当 section.button 存在且有 href 时才渲染按钮；
+           buttonAlign === 'center' 时附加居中容器类 -->
+      <div
+        v-if="section.button && section.button.href"
+        :class="['button-wrap', { 'button-wrap--center': section.buttonAlign === 'center' }]"
+      >
+        <a
+          class="section-button"
+          :href="section.button.href"
+          target="_blank"
+          rel="noreferrer"
+          :aria-label="section.button.label || 'Open Link'"
+        >
+          {{ section.button.label || "Open Link" }}
+        </a>
+      </div>
       <!-- layout: "split" = 左图右文（可复用到其它项目） -->
-      <div v-if="section.layout === 'split'" class="project-detail-split">
+      <div v-else-if="section.layout === 'split'" class="project-detail-split">
         <div
           v-if="section.images && section.images.length"
           class="project-detail-gallery project-detail-gallery--split"

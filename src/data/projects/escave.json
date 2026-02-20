@@ -10,9 +10,5 @@
              ],
     "videoSrc":  "/media/output_escave.mp4",
     "poster":  "",
-    "summary":  "Recoil animation, decals, weapon switch, enemy AI tweaks.",
-    "links":  {
-                  "demo":  "",
-                  "github":  ""
-              }
+    "summary":  "Recoil animation, decals, weapon switch, enemy AI tweaks."
 }
